@@ -1,6 +1,6 @@
 [package]
 name = "livebloom"
-version = "0.4.0"
+version = "0.5.0"
 edition = "2021"
 
 [dependencies]
@@ -12,3 +12,5 @@ axum = "0.7"
 tokio = { version = "1", features = ["full"] }
 rand = "0.8"
 serde = { version = "1.0", features = ["derive"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"
