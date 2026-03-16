@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://unpkg.com/htmx.org@1.9.10/dist/htmx.min.js"></script>
+    <style>
+        body {
+            font-family: Arial;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>LiveBloom Test - HTMX</h1>
+    <div hx-get="/content" hx-trigger="every 1s" hx-swap="innerHTML"></div>
+</body>
+
+</html>
