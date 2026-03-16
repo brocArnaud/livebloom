@@ -1,0 +1,24 @@
+
+use crate::style;
+use crate::navbar;
+use crate::stories;
+use crate::feed;
+use crate::profiles;
+use crate::messenger;
+
+#[export_name = "get_html"]
+pub extern "C" fn get_html() -> *mut std::ffi::c_char {
+    let html = format!("{}{}<div class='app-layout'>{}<div class='center-col'>{}{}</div>{}</div>{}",
+        style::get_style(), navbar::get_navbar(0),
+        profiles::get_left_sidebar(),
+        stories::get_stories(), feed::get_feed(true),
+        profiles::get_right_sidebar(),
+        messenger::get_messenger());
+    let c_string = std::ffi::CString::new(html).unwrap_or_default();
+    c_string.into_raw()
+}
+
+#[export_name = "free_html"]
+pub unsafe extern "C" fn free_html(ptr: *mut std::ffi::c_char) {
+    if !ptr.is_null() { let _ = std::ffi::CString::from_raw(ptr); }
+}

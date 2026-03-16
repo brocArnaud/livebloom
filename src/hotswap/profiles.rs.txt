@@ -1,0 +1,57 @@
+
+pub fn get_left_sidebar() -> String {
+    r#"<aside class="left-sidebar">
+        <ul class="nav-links">
+            <li class="active">🏠 Feed</li>
+            <li>👥 Friends</li>
+            <li>💬 Messenger</li>
+            <li>🔔 Notifications</li>
+            <li>📺 Watch</li>
+            <li>🛍️ Marketplace</li>
+            <li>🌸 BloomHub</li>
+        </ul>
+        <div class="card" style="margin-top:16px;text-align:center">
+            <div style="font-size:40px;margin-bottom:8px">🌸</div>
+            <div style="font-family:'Press Start 2P',monospace;font-size:8px;color:#ff71ce">AestheticDreamer</div>
+            <div style="font-size:13px;color:rgba(255,209,220,0.5);margin-top:6px">Living in the aesthetic</div>
+        </div>
+    </aside>"#.to_string()
+}
+
+pub fn get_right_sidebar() -> String {
+    let suggestions = [
+        ("🎭", "MaskOfVenus", "5 mutual friends"),
+        ("🏮", "LanternDrift", "3 mutual friends"),
+        ("🦋", "NeonButterfly", "8 mutual friends"),
+        ("🎪", "CircusVapor", "2 mutual friends"),
+    ];
+    let mut html = String::from(r#"<aside class="right-sidebar"><div class="card"><div class="section-title">People You May Know</div>"#);
+    for (emoji, name, mutual) in suggestions {
+        html += &format!(r#"
+        <div class="friend-card">
+            <div class="friend-avatar">{emoji}</div>
+            <div class="friend-info">
+                <div class="friend-name">{name}</div>
+                <div class="friend-mutual">{mutual}</div>
+            </div>
+            <button class="add-btn">+ Add</button>
+        </div>"#);
+    }
+    html += r#"</div>
+    <div class="card" style="margin-top:16px">
+        <div class="section-title">Trending in Vapor</div>
+        <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+            <div style="color:#01cdfe;font-size:14px">#VaporwaveIsNotDead</div>
+            <div style="font-size:12px;color:rgba(255,209,220,0.4)">4.2K posts</div>
+        </div>
+        <div style="padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.05)">
+            <div style="color:#b967ff;font-size:14px">#AestheticCoding</div>
+            <div style="font-size:12px;color:rgba(255,209,220,0.4)">1.8K posts</div>
+        </div>
+        <div style="padding:6px 0">
+            <div style="color:#05ffa1;font-size:14px">#LiveBloom</div>
+            <div style="font-size:12px;color:rgba(255,209,220,0.4)">892 posts</div>
+        </div>
+    </div></aside>"#;
+    html
+}

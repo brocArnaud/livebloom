@@ -1,0 +1,27 @@
+
+pub fn get_stories() -> String {
+    let users = [
+        ("🌸", "Your Story", true),
+        ("🌅", "NeonSunset", false),
+        ("🎵", "VaporMike", false),
+        ("🌸", "CyberSakura", false),
+        ("🌙", "Luna", false),
+        ("👾", "PixelPhntm", false),
+        ("🎮", "RetroGamer", false),
+        ("🌊", "WaveRider", false),
+    ];
+    let mut html = String::from(r#"<div class="stories-bar">"#);
+    for (emoji, name, is_you) in users {
+        let add = if is_you { r#"<span class="story-add">+</span>"# } else { "" };
+        html += &format!(r#"
+        <div class="story-item">
+            <div class="story-avatar">
+                <div class="story-ring"></div>
+                {emoji}{add}
+            </div>
+            <span class="story-name">{name}</span>
+        </div>"#);
+    }
+    html += "</div>";
+    html
+}

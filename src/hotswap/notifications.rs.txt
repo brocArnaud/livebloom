@@ -1,0 +1,17 @@
+
+pub fn get_notifications() -> String {
+    let items = [
+        ("🌅", "NeonSunset_99", " liked your post", "2m ago", true),
+        ("🎵", "VaporMike", " sent you a friend request", "1h ago", true),
+        ("🌸", "CyberSakura", " commented: 'A E S T H E T I C'", "3h ago", true),
+        ("🌙", "RetroWave_Luna", " shared your post", "Yesterday", false),
+        ("👾", "PixelPhantom", " started following you", "2 days ago", false),
+    ];
+    let mut html = String::from(r#"<div class="notif-dropdown"><div class="notif-header"><span>NOTIFICATIONS</span><span style="color:#01cdfe;cursor:pointer;font-family:'VT323',monospace;font-size:14px">Mark all read</span></div>"#);
+    for (emoji, name, action, time, unread) in items {
+        let cls = if unread { "notif-item unread" } else { "notif-item" };
+        html += &format!(r#"<div class="{cls}"><span class="notif-avatar">{emoji}</span><div><div class="notif-text"><strong>{name}</strong>{action}</div><div class="notif-time">{time}</div></div></div>"#);
+    }
+    html += "</div>";
+    html
+}

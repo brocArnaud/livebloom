@@ -1,0 +1,71 @@
+
+pub fn get_feed(with_reactions: bool) -> String {
+    let posts = [
+        ("🌅", "NeonSunset_99", "2h ago",
+         "Just watched the sun dissolve into pixels 🌅",
+         Some(("linear-gradient(180deg, #ff6b6b 0%, #ffa07a 40%, #ff71ce 70%, #b967ff 100%)", "Pixel Sunset")),
+         [12, 34, 5, 8, 21]),
+        ("🎵", "VaporMike", "3h ago",
+         "リサフランク420 / 現代のコンピュー 🎵\n\nThis track changed everything. Macintosh Plus forever.",
+         None,
+         [45, 12, 3, 2, 67]),
+        ("🌸", "CyberSakura", "5h ago",
+         "Found this abandoned mall. The aesthetics are unreal...",
+         Some(("linear-gradient(180deg, #0f0c29 0%, #302b63 50%, #24243e 100%)", "Abandoned Mall")),
+         [23, 56, 8, 15, 9]),
+        ("🌸", "AestheticDreamer", "6h ago",
+         "Late night coding in the v a p o r w a v e ✨\n\nWhen the terminal glows pink, you know it's going to be a good session.",
+         None,
+         [67, 23, 41, 5, 33]),
+        ("🌙", "RetroWave_Luna", "Yesterday",
+         "The moon looks different in 16-bit 🌙",
+         Some(("linear-gradient(180deg, #0c0032 0%, #190061 30%, #240090 50%, #3500d3 70%, #282828 100%)", "16-bit Moon")),
+         [19, 44, 2, 28, 11]),
+        ("👾", "PixelPhantom", "Yesterday",
+         "New high score on a game that doesn't exist 👾\n\nScore: 999,999,999\nLevel: ∞\nLives: Yes",
+         None,
+         [88, 7, 62, 3, 15]),
+        ("🎵", "VaporMike", "2 days ago",
+         "My room at 3am. Pure aesthetic.",
+         Some(("linear-gradient(180deg, #12002e 0%, #1a0040 30%, #2d1060 50%, #ff71ce 90%, #ff71ce 100%)", "3AM Vibes")),
+         [34, 18, 9, 42, 27]),
+        ("🌅", "NeonSunset_99", "3 days ago",
+         "Remember when the future was now?\n\nIt still is. We're living in it. Every pixel, every glow, every beat. This is the future our past dreamed of. 🌐",
+         None,
+         [51, 29, 14, 7, 39]),
+    ];
+
+    let reaction_types = ["👍", "❤️", "😂", "😮", "🌸"];
+
+    let mut html = String::new();
+    for (emoji, author, time, content, image, counts) in &posts {
+        html += r#"<div class="post-card">"#;
+        // Header
+        html += &format!(r#"<div class="post-header"><div class="post-avatar">{emoji}</div><div><div class="post-author">{author}</div><div class="post-time">{time}</div></div></div>"#);
+        // Content
+        let content_html = content.replace('\n', "<br>");
+        html += &format!(r#"<div class="post-content">{}</div>"#, content_html);
+        // Image
+        if let Some((gradient, alt)) = image {
+            html += &format!(r#"<div class="post-image" style="background:{gradient}" title="{alt}"></div>"#);
+        }
+        // Divider
+        html += r#"<div class="post-divider"></div>"#;
+        // Reactions
+        if with_reactions {
+            html += r#"<div class="reactions-bar">"#;
+            for (i, rtype) in reaction_types.iter().enumerate() {
+                let count = counts[i];
+                if count > 0 {
+                    html += &format!(r#"<span class="reaction-btn">{rtype} {count}</span>"#);
+                }
+            }
+            html += r#"</div>"#;
+            let total: usize = counts.iter().sum();
+            let comment_count = (total % 23) + 1;
+            html += &format!(r#"<div class="post-stats"><span>{total} reactions</span><span>{comment_count} comments · {} shares</span></div>"#, (total % 11) + 1);
+        }
+        html += "</div>";
+    }
+    html
+}

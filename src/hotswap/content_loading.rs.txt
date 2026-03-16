@@ -1,0 +1,28 @@
+
+#[export_name = "get_html"]
+pub extern "C" fn get_html() -> *mut std::ffi::c_char {
+    let html = r##"
+    <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;text-align:center">
+        <h1 style="font-family:'Press Start 2P',monospace;font-size:28px;color:#ff71ce;text-shadow:0 0 20px #ff71ce,0 0 40px rgba(185,103,255,0.5);animation:pulse 2s ease-in-out infinite">
+            🌸 BloomBook
+        </h1>
+        <p style="font-family:'VT323',monospace;font-size:24px;color:#01cdfe;margin-top:20px;animation:pulse 2s ease-in-out infinite 0.5s">
+            is waking up...
+        </p>
+        <div style="margin-top:40px;width:200px;height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden">
+            <div style="width:100%;height:100%;background:linear-gradient(90deg,#ff71ce,#01cdfe,#b967ff);animation:loading 2s ease-in-out infinite"></div>
+        </div>
+    </div>
+    <style>
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+        @keyframes loading{0%{transform:translateX(-100%)}50%{transform:translateX(0%)}100%{transform:translateX(100%)}}
+    </style>
+    "##;
+    let c_string = std::ffi::CString::new(html).unwrap_or_default();
+    c_string.into_raw()
+}
+
+#[export_name = "free_html"]
+pub unsafe extern "C" fn free_html(ptr: *mut std::ffi::c_char) {
+    if !ptr.is_null() { let _ = std::ffi::CString::from_raw(ptr); }
+}

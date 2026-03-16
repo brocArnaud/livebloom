@@ -1,0 +1,20 @@
+
+pub fn get_messenger() -> String {
+    r#"<div class="messenger-panel">
+        <div class="messenger-header">
+            <span>💬 MESSENGER</span>
+            <span class="messenger-minimize">−</span>
+        </div>
+        <div class="chat-messages">
+            <div class="msg-bubble msg-them">hey, did you see the new vapor collection? 🌸</div>
+            <div class="msg-bubble msg-you">omg yes! the sunset series is incredible</div>
+            <div class="msg-bubble msg-them">right?? the colors are so surreal</div>
+            <div class="msg-bubble msg-you">we should go to that abandoned mall this weekend 📸</div>
+            <div class="msg-bubble msg-them">I'm in! let's chase that aesthetic ✨</div>
+        </div>
+        <div class="chat-input-bar">
+            <input class="chat-input" type="text" placeholder="Type a message...">
+            <button class="chat-send">📤</button>
+        </div>
+    </div>"#.to_string()
+}

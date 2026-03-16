@@ -1,0 +1,51 @@
+
+pub fn get_threejs() -> String {
+    r#"<div class="hero-canvas-wrap"><canvas id="bloom-bust" width="600" height="200"></canvas></div>
+    <script>
+    if (!window._bloomBustLoaded) {
+        window._bloomBustLoaded = true;
+        setTimeout(() => {
+            const canvas = document.getElementById('bloom-bust');
+            if (!canvas) return;
+            const w = 600, h = 200;
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(60, w/h, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({canvas: canvas, alpha: true, antialias: true});
+            renderer.setSize(w, h);
+            renderer.setClearColor(0x000000, 0);
+            camera.position.z = 4;
+
+            // Main icosahedron (bust)
+            const geo1 = new THREE.IcosahedronGeometry(1.2, 1);
+            const mat1 = new THREE.MeshBasicMaterial({color: 0xff71ce, wireframe: true, transparent: true, opacity: 0.7});
+            const bust = new THREE.Mesh(geo1, mat1);
+            scene.add(bust);
+
+            // Inner glow sphere
+            const geo2 = new THREE.IcosahedronGeometry(0.8, 0);
+            const mat2 = new THREE.MeshBasicMaterial({color: 0x01cdfe, wireframe: true, transparent: true, opacity: 0.4});
+            const inner = new THREE.Mesh(geo2, mat2);
+            scene.add(inner);
+
+            // Outer ring
+            const geo3 = new THREE.TorusGeometry(1.8, 0.02, 8, 64);
+            const mat3 = new THREE.MeshBasicMaterial({color: 0xb967ff, transparent: true, opacity: 0.5});
+            const ring = new THREE.Mesh(geo3, mat3);
+            ring.rotation.x = Math.PI / 3;
+            scene.add(ring);
+
+            if (window._bloomAnimId) cancelAnimationFrame(window._bloomAnimId);
+            function animate() {
+                window._bloomAnimId = requestAnimationFrame(animate);
+                bust.rotation.y += 0.005;
+                bust.rotation.x += 0.002;
+                inner.rotation.y -= 0.008;
+                inner.rotation.z += 0.003;
+                ring.rotation.z += 0.003;
+                renderer.render(scene, camera);
+            }
+            animate();
+        }, 500);
+    }
+    </script>"#.to_string()
+}

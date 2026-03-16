@@ -1,0 +1,19 @@
+
+pub fn get_navbar(notif_count: usize) -> String {
+    let badge = if notif_count > 0 {
+        format!(r#"<span class="notif-badge">{}</span>"#, notif_count)
+    } else {
+        String::new()
+    };
+    format!(r#"
+    <nav class="navbar">
+        <a class="navbar-logo" href='#'>🌸 BloomBook</a>
+        <input class="navbar-search" type="text" placeholder="🔍 Search the vapor...">
+        <div class="navbar-right">
+            <span class="navbar-icon" id="notif-bell">🔔{badge}</span>
+            <span class="navbar-icon">💬</span>
+            <span class="navbar-icon">🌸</span>
+        </div>
+    </nav>
+    "#, badge=badge)
+}

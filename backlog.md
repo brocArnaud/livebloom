@@ -1,74 +1,38 @@
-# Backlog — LiveBloom
+# Backlog — BloomBook (Fully Functional)
 
-## v0.1.0 — Engine Hardening (COMPLETED)
+## Backend — Data Layer
+- [x] ~~B1: Data models (User, Post, Comment, Message, Reaction, FriendRequest, Notification)~~
+- [x] ~~B2: In-memory store (SocialStore) with seeded demo data (6 users, 8 posts, messages, notifications)~~
+- [x] ~~B3: Store operations: CRUD for posts, comments, reactions, friends, messages, notifications~~
 
-- [x] ~~B1: Fix buffer overflow in `get_html`~~
-- [x] ~~B2: Fix file descriptor leak~~
-- [x] ~~B3: Fix HTMX not loaded in main page~~
-- [x] ~~B4: Fix race condition on module swap~~
-- [x] ~~B5: Replace unwrap() on mutex locks~~
-- [x] ~~B6: Replace unwrap() in main.rs~~
-- [x] ~~B7: Fix Agent 5 dual animation loop~~
-- [x] ~~B8: Fix hardcoded pub mod content~~
-- [x] ~~B9: Fix server exits after agent sequence~~
-- [x] ~~B10: Fix Agent 5 script re-execution spam~~
-- [x] ~~I1: Switch to tracing~~
-- [x] ~~I2: Show compilation errors in HTTP response~~
-- [x] ~~I3: Shared cargo registry cache~~
-- [x] ~~I4: Run cargo build via spawn_blocking~~
-- [x] ~~I5+I6: Unit + integration tests (18 tests)~~
+## Backend — API Endpoints
+- [x] ~~A1: POST /api/post — create post (text + optional image upload via multipart)~~
+- [x] ~~A2: POST /api/post/:id/react/:type — toggle reaction, returns updated reaction bar~~
+- [x] ~~A3: POST /api/post/:id/comment — add comment, returns comment HTML fragment~~
+- [x] ~~A4: POST /api/friend/:id/request — send friend request, returns "⏳ Pending" button~~
+- [x] ~~A5: POST /api/friend/:id/accept — accept friend request, returns "✓ Friends" badge~~
+- [x] ~~A6: GET /api/chat/:id — get full conversation HTML with a user~~
+- [x] ~~A7: GET /api/notifications — get notifications HTML dropdown~~
+- [x] ~~A8: GET /uploads/:filename — serve uploaded media files (tower-http ServeDir)~~
+- [x] ~~A9: WS /ws — WebSocket for real-time chat messages~~
 
-## BloomBook — Vaporwave Facebook Clone (COMPLETED)
+## Frontend — Interactive HTMX
+- [x] ~~F1: Post creation form with file upload (hx-post, multipart, preview)~~
+- [x] ~~F2: Reaction buttons with toggle (hx-post, swap reaction bar, active glow state)~~
+- [x] ~~F3: Comment form per post (hx-post, append comment with author info)~~
+- [x] ~~F4: Friend request/accept buttons (hx-post, swap button state)~~
+- [x] ~~F5: Live chat via WebSocket (JS send/receive, append messages, auto-scroll)~~
+- [x] ~~F6: Notification bell click → dropdown (hx-get, toggle visibility)~~
+- [x] ~~F7: Dynamic feed rendering from store (not static hot-swap)~~
 
-### Phase 0: Loading Screen
-- [x] ~~Pulsing "BloomBook is waking up..." with gradient loading bar~~
+## Integration
+- [x] ~~I1: Hot-swap demo (Phases 0-8) builds the UI shell~~
+- [x] ~~I2: After demo, switch to dynamic mode (serve from store, stop HTMX polling)~~
+- [x] ~~I3: Media uploads stored on disk (/tmp/bloombook_uploads), served via /uploads/~~
+- [x] ~~I4: Visual review + all features tested via Playwright~~
+- [x] ~~I5: Clippy clean + 18 tests passing~~
 
-### Phase 1: Base Layout + CSS + Navbar
-- [x] ~~Full vaporwave CSS (glassmorphism, neon glows, scanline overlay, gradient scrollbar)~~
-- [x] ~~Navbar with neon pink logo, glass search bar, icon buttons~~
-- [x] ~~3-column responsive layout (left sidebar, center, right sidebar)~~
-
-### Phase 2: Stories Carousel
-- [x] ~~8 circular story avatars with animated gradient ring borders~~
-- [x] ~~"Your Story" with + icon~~
-- [x] ~~Horizontal scroll~~
-
-### Phase 3: News Feed
-- [x] ~~8 posts with varied content (text, Japanese, emoji, multi-line)~~
-- [x] ~~4 CSS gradient "image" posts (sunset, abandoned mall, moonrise, 3AM vibes)~~
-- [x] ~~Post cards with glassmorphism hover effects~~
-
-### Phase 4: Reactions
-- [x] ~~5 reaction types: 👍 Like, ❤️ Love, 😂 Laugh, 😮 Wow, 🌸 Bloom~~
-- [x] ~~Deterministic counts per post~~
-- [x] ~~Reaction bar + stats (total reactions, comments, shares)~~
-- [x] ~~Hover glow effect on reaction buttons~~
-
-### Phase 5: Sidebars
-- [x] ~~Left nav sidebar (Feed, Friends, Messenger, Notifications, Watch, Marketplace, BloomHub)~~
-- [x] ~~User profile card (AestheticDreamer)~~
-- [x] ~~Right sidebar: 4 friend suggestions with "+ Add" buttons~~
-- [x] ~~Trending hashtags (#VaporwaveIsNotDead, #AestheticCoding, #LiveBloom)~~
-
-### Phase 6: Messenger
-- [x] ~~Fixed bottom-right chat panel~~
-- [x] ~~5 alternating chat bubbles (pink for them, cyan for you)~~
-- [x] ~~Input bar with gradient send button~~
-- [x] ~~Glassmorphism panel styling~~
-
-### Phase 7: Notifications
-- [x] ~~Dropdown with 5 notifications (liked, friend request, comment, share, follow)~~
-- [x] ~~Unread highlight with pink left border~~
-- [x] ~~Red badge on bell icon (count: 3)~~
-- [x] ~~"Mark all read" action link~~
-
-### Phase 8: Three.js + Final Polish
-- [x] ~~Three.js vaporwave bust (IcosahedronGeometry wireframe, pink + cyan inner + lavender ring)~~
-- [x] ~~Hero canvas with transparent background~~
-- [x] ~~Animation guard (window._bloomBustLoaded)~~
-- [x] ~~Notification dropdown positioning fix~~
-
-### Verification
-- [x] ~~cargo clippy -- zero warnings~~
-- [x] ~~cargo test -- 18/18 passing~~
-- [x] ~~Visual review via Playwright -- all phases verified~~
+## Security
+- [x] ~~S1: HTML escaping on all user-generated content (html_escape function)~~
+- [x] ~~S2: Safe DOM manipulation via textContent (no innerHTML with user data)~~
+- [x] ~~S3: File upload validates extension, uses UUID filenames~~
